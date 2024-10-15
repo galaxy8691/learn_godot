@@ -3,7 +3,7 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 var cursor : Sprite2D
-var building : PackedScene = load("res://scenes/building/building.tscn")
+var building : PackedScene = load("res://building/building.tscn")
 var p_button : Button
 var hover_grid_position : Vector2i = Vector2i.MAX
 var highlight_tile_maplayer : TileMapLayer
