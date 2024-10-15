@@ -1,6 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://clijuqkclpmha"]
+[gd_scene load_steps=6 format=4 uid="uid://clijuqkclpmha"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_us5cu"]
+[ext_resource type="PackedScene" uid="uid://chq1wkb67xouj" path="res://manager/grid_manager.tscn" id="2_1crcp"]
+[ext_resource type="TileSet" uid="uid://cqu8budwpj0hu" path="res://resources/tilemap_flat_tile_set.tres" id="2_7sod3"]
 [ext_resource type="TileSet" uid="uid://intpdbjtuub4" path="res://resources/hightlight_tile_set.tres" id="2_067as"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tvu2y"]
@@ -8,6 +10,10 @@ size = Vector2(64, 64)
 
 [node name="Main" type="Node"]
 script = ExtResource("1_us5cu")
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+tile_map_data = PackedByteArray("AAAFAAQAAAAGAAAAAAAGAAQAAAAGAAEAAAAGAAMAAAAFAAAAAAAHAAMAAAAGAAAAAAAIAAMAAAAGAAAAAAAJAAMAAAAGAAAAAAAKAAMAAAAGAAAAAAALAAQAAAAGAAEAAAAKAAQAAAAGAAEAAAAKAAUAAAAGAAEAAAAJAAUAAAAGAAEAAAAIAAUAAAAGAAEAAAAIAAQAAAAGAAEAAAAJAAQAAAAGAAEAAAAHAAQAAAAGAAEAAAAHAAUAAAAGAAEAAAAGAAUAAAAGAAEAAAAFAAUAAAAGAAEAAAAFAAYAAAAGAAEAAAAGAAYAAAAGAAEAAAAEAAQAAAAFAAAAAAAEAAUAAAAGAAEAAAADAAUAAAAFAAAAAAAEAAYAAAAGAAEAAAADAAYAAAAFAAIAAAALAAMAAAAGAAAAAAAMAAMAAAAHAAAAAAAMAAQAAAAGAAEAAAALAAUAAAAGAAEAAAALAAYAAAAGAAEAAAAMAAYAAAAGAAEAAAAKAAcAAAAFAAEAAAALAAcAAAAGAAEAAAAMAAUAAAAGAAEAAAAMAAcAAAAGAAEAAAALAAgAAAAGAAIAAAAKAAgAAAAFAAIAAAAKAAYAAAAGAAEAAAANAAcAAAAHAAEAAAAMAAgAAAAGAAIAAAANAAgAAAAHAAIAAAANAAYAAAAGAAEAAAANAAUAAAAGAAEAAAAOAAUAAAAGAAEAAAAOAAQAAAAGAAAAAAAPAAQAAAAHAAAAAAAPAAUAAAAHAAEAAAAPAAYAAAAHAAIAAAAOAAYAAAAGAAIAAAAJAAYAAAAGAAIAAAAIAAYAAAAGAAIAAAAHAAYAAAAGAAIAAAAGAAcAAAAHAAIAAAAFAAcAAAAGAAIAAAAEAAcAAAAFAAIAAAANAAQAAAAGAAAAAAA=")
+tile_set = ExtResource("2_7sod3")
 
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.513726)
@@ -24,3 +30,6 @@ offset_right = 127.0
 offset_bottom = 699.0
 text = "PlaceBuilding
 "
+
+[node name="GridManager" parent="." node_paths=PackedStringArray("highlight_tile_maplayer") instance=ExtResource("2_1crcp")]
+highlight_tile_maplayer = NodePath("../HighlightTileMapLayer")

@@ -6,15 +6,15 @@ var cursor : Sprite2D
 var building : PackedScene = load("res://building/building.tscn")
 var p_button : Button
 var hover_grid_position : Vector2i = Vector2i.MAX
-var highlight_tile_maplayer : TileMapLayer
+var grid_manager : GridManager
 var occupied_cells = {}
 func _ready() -> void:
-	highlight_tile_maplayer = $HighlightTileMapLayer
+	grid_manager = $GridManager
 	cursor = $Cursor
 	cursor.visible = false
 	p_button = $PlaceBuildingButton
 	p_button.pressed.connect(on_press)
-
+   
 func on_press():
 	cursor.visible = !cursor.visible
 
@@ -23,15 +23,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		placce_building()
 		cursor.visible = false
 
-func update_highlight_tile_maplayer():
-	highlight_tile_maplayer.clear()
-	if hover_grid_position == Vector2i.MAX:
-		return
-	else:
-		#print(hover_grid_position)
-		for x in range(hover_grid_position.x - 3, hover_grid_position.x + 4):
-			for y in range(hover_grid_position.y-3, hover_grid_position.y+4):
-				highlight_tile_maplayer.set_cell(Vector2i(x,y), 0,Vector2i(0,0))
+
 
 func placce_building():
 
@@ -39,7 +31,7 @@ func placce_building():
 	add_child(building_instance)
 	occupied_cells[hover_grid_position] = true
 	building_instance.global_position = hover_grid_position * 64
-	highlight_tile_maplayer.clear()
+	grid_manager.clear_highlight_tile_maplayer()
 
 func get_mouse_grid_cell_position() -> Vector2:
 	var mouse_position = cursor.get_global_mouse_position()
@@ -52,4 +44,4 @@ func _process(delta: float) -> void:
 	hover_grid_position = get_mouse_grid_cell_position()
 	cursor.global_position = hover_grid_position * 64
 	if cursor.visible && hover_grid_position != Vector2i.MAX:
-		update_highlight_tile_maplayer()
+		grid_manager.update_highlight_tile_maplayer(hover_grid_position, 3)
