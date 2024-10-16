@@ -3,11 +3,11 @@ extends Node
 
 # Called when the node enters the scene tree for the first time.
 var cursor : Sprite2D
-var building : PackedScene = load("res://building/building.tscn")
+var building : PackedScene = load("res://scenes/building/building.tscn")
 var p_button : Button
 var hover_grid_position : Vector2i = Vector2i.MAX
 var grid_manager : GridManager
-var occupied_cells = {}
+
 func _ready() -> void:
 	grid_manager = $GridManager
 	cursor = $Cursor
@@ -19,7 +19,7 @@ func on_press():
 	cursor.visible = !cursor.visible
 
 func _unhandled_input(event: InputEvent) -> void:
-	if cursor.visible && event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX && !occupied_cells.has(hover_grid_position):
+	if cursor.visible && event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX && grid_manager.check_cell_is_valid_to_build(hover_grid_position):
 		placce_building()
 		cursor.visible = false
 
@@ -29,7 +29,7 @@ func placce_building():
 
 	var building_instance = building.instantiate()
 	add_child(building_instance)
-	occupied_cells[hover_grid_position] = true
+	grid_manager.add_occpied_cell(hover_grid_position)
 	building_instance.global_position = hover_grid_position * 64
 	grid_manager.clear_highlight_tile_maplayer()
 
