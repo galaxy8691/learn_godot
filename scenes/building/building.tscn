@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://ope0u6bp77se"]
+[gd_scene load_steps=3 format=3 uid="uid://ope0u6bp77se"]
 
 [ext_resource type="Texture2D" uid="uid://b3umnb4e176gd" path="res://assets/buildings/tower_blue.png" id="1_8pfch"]
+[ext_resource type="PackedScene" uid="uid://ix48ftnmiref" path="res://scenes/component/building_component.tscn" id="2_dus4h"]
 
 [node name="Building" type="Node2D"]
 
@@ -8,3 +9,5 @@
 texture = ExtResource("1_8pfch")
 centered = false
 offset = Vector2(-32, -165)
+
+[node name="BuildingComponent" parent="." instance=ExtResource("2_dus4h")]

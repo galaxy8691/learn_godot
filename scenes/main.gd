@@ -17,9 +17,12 @@ func _ready() -> void:
    
 func on_press():
 	cursor.visible = !cursor.visible
+	grid_manager.clear_highlight_tile_maplayer()
+	grid_manager.highlight_buildable_area()
 
 func _unhandled_input(event: InputEvent) -> void:
-	if cursor.visible && event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX && grid_manager.check_cell_is_valid_to_build(hover_grid_position):
+	if cursor.visible && event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX \
+	&& grid_manager.check_cell_is_in_buiding_area(hover_grid_position):
 		placce_building()
 		cursor.visible = false
 
@@ -28,9 +31,9 @@ func _unhandled_input(event: InputEvent) -> void:
 func placce_building():
 
 	var building_instance = building.instantiate()
-	add_child(building_instance)
-	grid_manager.add_occpied_cell(hover_grid_position)
 	building_instance.global_position = hover_grid_position * 64
+	add_child(building_instance)
+	
 	grid_manager.clear_highlight_tile_maplayer()
 
 func get_mouse_grid_cell_position() -> Vector2:
@@ -43,4 +46,4 @@ func get_mouse_grid_cell_position() -> Vector2:
 func _process(delta: float) -> void:
 	hover_grid_position = get_mouse_grid_cell_position()
 	cursor.global_position = hover_grid_position * 64
-	grid_manager.highlight_buildable_area()
+	#grid_manager.highlight_buildable_area()
