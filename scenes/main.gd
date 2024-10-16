@@ -43,5 +43,4 @@ func get_mouse_grid_cell_position() -> Vector2:
 func _process(delta: float) -> void:
 	hover_grid_position = get_mouse_grid_cell_position()
 	cursor.global_position = hover_grid_position * 64
-	if cursor.visible && hover_grid_position != Vector2i.MAX:
-		grid_manager.update_highlight_tile_maplayer(hover_grid_position, 3)
+	grid_manager.highlight_buildable_area()

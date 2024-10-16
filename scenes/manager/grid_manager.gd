@@ -8,8 +8,13 @@ var occupied_cells = {}
 func _ready() -> void:
 	pass # Replace with function body.
 
-func update_highlight_tile_maplayer(grid_vector : Vector2i, radius : int) -> void:
+func highlight_buildable_area():
 	clear_highlight_tile_maplayer()
+	var building_components = get_tree().get_nodes_in_group("building_component") as Array[BuildingComponent]
+	for building_component in building_components:
+		_update_highlight_tile_maplayer(building_component.get_grid_cell_position(), building_component.buildable_radius)
+
+func _update_highlight_tile_maplayer(grid_vector : Vector2i, radius : int) -> void:
 	for x in range(grid_vector.x - radius, grid_vector.x + radius + 1):
 		for y in range(grid_vector.y-radius, grid_vector.y + radius + 1):
 			if !check_cell_is_valid_to_build(Vector2i(x,y)):
