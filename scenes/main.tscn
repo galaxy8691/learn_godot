@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_us5cu"]
 [ext_resource type="PackedScene" uid="uid://chq1wkb67xouj" path="res://scenes/manager/grid_manager.tscn" id="2_1crcp"]
-[ext_resource type="TileSet" uid="uid://cqu8budwpj0hu" path="res://assets/resources/tilemap_flat_tile_set.tres" id="2_7sod3"]
-[ext_resource type="TileSet" uid="uid://intpdbjtuub4" path="res://assets/resources/hightlight_tile_set.tres" id="2_067as"]
+[ext_resource type="TileSet" uid="uid://cqu8budwpj0hu" path="res://resources/base_tile_set.tres" id="2_7sod3"]
+[ext_resource type="TileSet" uid="uid://intpdbjtuub4" path="res://resources/hightlight_tile_set.tres" id="2_067as"]
 [ext_resource type="PackedScene" uid="uid://dtg73td2ccona" path="res://scenes/building/base.tscn" id="5_i6tb1"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tvu2y"]
@@ -14,11 +14,23 @@ script = ExtResource("1_us5cu")
 
 [node name="GridManager" parent="." node_paths=PackedStringArray("highlight_tile_maplayer", "base_tile_maplayer") instance=ExtResource("2_1crcp")]
 highlight_tile_maplayer = NodePath("../HighlightTileMapLayer")
-base_tile_maplayer = NodePath("../BaseTileMapLayer")
+base_tile_maplayer = NodePath("../YSort/BaseTileMapLayer")
 
-[node name="BaseTileMapLayer" type="TileMapLayer" parent="."]
+[node name="YSort" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="BaseTileMapLayer" type="TileMapLayer" parent="YSort"]
+y_sort_enabled = true
 tile_map_data = PackedByteArray("AAAFAAQAAAAGAAAAAAAGAAQAAAAGAAEAAAAGAAMAAAAFAAAAAAAHAAMAAAAGAAAAAAAIAAMAAAAHAAAAAAAKAAMAAAAFAAEAAAALAAQAAAAGAAEAAAAKAAQAAAAGAAEAAAAKAAUAAAAGAAEAAAAJAAUAAAAGAAEAAAAIAAUAAAAGAAEAAAAIAAQAAAAGAAEAAAAJAAQAAAAGAAAAAAAHAAQAAAAGAAEAAAAHAAUAAAAGAAEAAAAGAAUAAAAGAAEAAAAFAAUAAAAGAAEAAAAFAAYAAAAGAAEAAAAGAAYAAAAGAAEAAAAEAAQAAAAFAAAAAAAEAAUAAAAGAAEAAAADAAUAAAAGAAAAAAAEAAYAAAAGAAEAAAADAAYAAAAGAAEAAAALAAMAAAAGAAEAAAAMAAMAAAAGAAEAAAAMAAQAAAAGAAEAAAALAAUAAAAGAAEAAAALAAYAAAAGAAEAAAAMAAYAAAAGAAEAAAAKAAcAAAAGAAEAAAALAAcAAAAGAAEAAAAMAAUAAAAGAAEAAAAMAAcAAAAGAAEAAAALAAgAAAAGAAIAAAAKAAgAAAAFAAIAAAAKAAYAAAAGAAEAAAANAAcAAAAGAAEAAAAMAAgAAAAGAAIAAAANAAgAAAAHAAIAAAANAAYAAAAGAAEAAAANAAUAAAAGAAEAAAAOAAUAAAAGAAEAAAAOAAQAAAAGAAEAAAAPAAQAAAAHAAEAAAAPAAUAAAAGAAEAAAAPAAYAAAAGAAEAAAAOAAYAAAAGAAEAAAAJAAYAAAAGAAEAAAAIAAYAAAAGAAEAAAAHAAYAAAAGAAEAAAAGAAcAAAAGAAEAAAAFAAcAAAAGAAEAAAAEAAcAAAAGAAEAAAANAAQAAAAGAAEAAAAEAAgAAAAGAAEAAAAFAAgAAAAGAAEAAAAGAAgAAAAHAAEAAAAGAAkAAAAHAAIAAAAFAAkAAAAGAAIAAAAEAAkAAAAFAAIAAAAHAAcAAAAGAAIAAAAIAAcAAAAGAAIAAAAJAAcAAAAGAAIAAAADAAgAAAAGAAIAAAACAAgAAAAFAAIAAAACAAcAAAAFAAEAAAADAAcAAAAGAAEAAAACAAYAAAAFAAEAAAACAAUAAAAFAAAAAAAOAAcAAAAGAAIAAAAPAAcAAAAGAAIAAAAQAAcAAAAHAAIAAAAQAAYAAAAGAAEAAAARAAYAAAAHAAIAAAARAAUAAAAHAAAAAAAQAAUAAAAGAAAAAAANAAIAAAAGAAEAAAAMAAIAAAAGAAEAAAAMAAEAAAAFAAAAAAANAAEAAAAGAAAAAAAOAAEAAAAGAAAAAAAPAAEAAAAHAAAAAAAPAAIAAAAHAAEAAAAPAAMAAAAHAAEAAAAOAAMAAAAGAAEAAAANAAMAAAAGAAEAAAAOAAIAAAAGAAEAAAALAAIAAAAGAAAAAAAKAAIAAAAFAAAAAAA=")
 tile_set = ExtResource("2_7sod3")
+
+[node name="ResourceTileMapLayer" type="TileMapLayer" parent="YSort/BaseTileMapLayer"]
+y_sort_enabled = true
+tile_map_data = PackedByteArray("AAALAAYAAQAAAAAAAAALAAQAAQAAAAAAAAALAAMAAQAAAAAAAAAHAAcAAQAAAAAAAAAKAAQAAQAAAAAAAAAKAAMAAQAAAAAAAAA=")
+tile_set = ExtResource("2_7sod3")
+
+[node name="Base" parent="YSort" instance=ExtResource("5_i6tb1")]
+position = Vector2(576, 320)
 
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.513726)
@@ -28,13 +40,18 @@ tile_set = ExtResource("2_067as")
 texture = SubResource("PlaceholderTexture2D_tvu2y")
 centered = false
 
-[node name="PlaceBuildingButton" type="Button" parent="."]
+[node name="PlaceTowerButton" type="Button" parent="."]
 offset_left = 10.0
 offset_top = 668.0
 offset_right = 127.0
 offset_bottom = 699.0
-text = "PlaceBuilding
+text = "PlaceTower
 "
 
-[node name="Base" parent="." instance=ExtResource("5_i6tb1")]
-position = Vector2(576, 320)
+[node name="PlaceVilliageButton" type="Button" parent="."]
+offset_left = 150.0
+offset_top = 667.0
+offset_right = 254.0
+offset_bottom = 698.0
+text = "PlaceVilliage
+"
