@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=4 uid="uid://clijuqkclpmha"]
+[gd_scene load_steps=9 format=4 uid="uid://clijuqkclpmha"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_us5cu"]
 [ext_resource type="PackedScene" uid="uid://chq1wkb67xouj" path="res://scenes/manager/grid_manager.tscn" id="2_1crcp"]
 [ext_resource type="TileSet" uid="uid://cqu8budwpj0hu" path="res://resources/base_tile_set.tres" id="2_7sod3"]
 [ext_resource type="TileSet" uid="uid://intpdbjtuub4" path="res://resources/hightlight_tile_set.tres" id="2_067as"]
 [ext_resource type="PackedScene" uid="uid://dtg73td2ccona" path="res://scenes/building/base.tscn" id="5_i6tb1"]
+[ext_resource type="PackedScene" uid="uid://cy6p1opvnv6yd" path="res://scenes/ui/UI.tscn" id="6_2674h"]
+[ext_resource type="PackedScene" uid="uid://d4h7v24u1b8s2" path="res://scenes/manager/building_manager.tscn" id="7_moycj"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tvu2y"]
 size = Vector2(64, 64)
@@ -40,18 +42,10 @@ tile_set = ExtResource("2_067as")
 texture = SubResource("PlaceholderTexture2D_tvu2y")
 centered = false
 
-[node name="PlaceTowerButton" type="Button" parent="."]
-offset_left = 10.0
-offset_top = 668.0
-offset_right = 127.0
-offset_bottom = 699.0
-text = "PlaceTower
-"
+[node name="Ui" parent="." instance=ExtResource("6_2674h")]
 
-[node name="PlaceVilliageButton" type="Button" parent="."]
-offset_left = 150.0
-offset_top = 667.0
-offset_right = 254.0
-offset_bottom = 698.0
-text = "PlaceVilliage
-"
+[node name="BuildingManager" parent="." node_paths=PackedStringArray("ysort", "grid_manager", "cursor", "ui") instance=ExtResource("7_moycj")]
+ysort = NodePath("../YSort")
+grid_manager = NodePath("../GridManager")
+cursor = NodePath("../Cursor")
+ui = NodePath("../Ui")
