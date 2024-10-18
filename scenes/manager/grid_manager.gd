@@ -9,6 +9,7 @@ var valid_buildable_cells = []
 var highlight_expand_cells = []
 var tile_maplayers = []
 var collected_resource = []
+var new_collected_resource = []
 func _ready() -> void:
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 	tile_maplayers = _setup_tile_maplayers(base_tile_maplayer)
@@ -53,6 +54,12 @@ func _update_collected_resource(buildable_compoent: BuildingComponent):
 			if _check_cell_is_wood_tile(Vector2i(x,y)):
 				if collected_resource.find(Vector2i(x,y)) == -1:
 					collected_resource.append(Vector2i(x,y))
+					new_collected_resource.append(Vector2i(x,y))
+
+func get_new_collected_resource_point():
+	var point = len(new_collected_resource)
+	new_collected_resource.clear()
+	return point
 
 # func _update_highlight_tile_maplayer(grid_vector : Vector2i, radius : int) -> void:
 # 	for x in range(grid_vector.x - radius, grid_vector.x + radius + 1):
