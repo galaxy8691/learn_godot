@@ -59,16 +59,24 @@ func _set_build_and_resource_radius(building_instance):
 	resource_radius = builiding_component.resource_radius
 
 func _unhandled_input(event: InputEvent) -> void:
-	if cursor.visible && event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX \
-	&& grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position) && current_resource >= current_building_instance.get_node("BuildingComponent").resource_uasage:
-		current_resource -= current_building_instance.get_node("BuildingComponent").resource_uasage
-		place_building(current_building_instance)
-		current_resource += grid_manager.get_new_collected_resource_point()
-		current_building_instance = null
-		cursor.visible = false
-		current_state = State.Normal
-	if event.is_action_pressed("cancel"):
-		cancel_place_building()
+	if current_state == State.Building:
+		if event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX \
+		&& grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position) \
+		&& current_resource >= current_building_instance.get_node("BuildingComponent").resource_uasage:
+			current_resource -= current_building_instance.get_node("BuildingComponent").resource_uasage
+			place_building(current_building_instance)
+			current_resource += grid_manager.get_new_collected_resource_point()
+			current_building_instance = null
+			cursor.visible = false
+			current_state = State.Normal
+		if event.is_action_pressed("cancel"):
+			cancel_place_building()
+	if current_state == State.Normal:
+		if event.is_action_pressed("right_click"):
+			var building = get_building_at_position()
+			if building:
+				GameEvent.emit_building_destroyed(building.get_node("BuildingComponent"))
+				destroy_building(building)
 
 func place_building(building_instance):
 	building_instance.global_position = hover_grid_position * 64
@@ -105,6 +113,20 @@ func cancel_place_building():
 	current_state = State.Normal
 	cursor.visible = false
 	if current_building_instance != null:
+		grid_manager.remove_placed_building(current_building_instance.get_node("BuildingComponent"))
 		current_building_instance.queue_free()
 		current_building_instance = null
 		grid_manager.clear_highlight_tile_maplayer()
+
+func destroy_building(building):
+		var resource_point = building.get_node("BuildingComponent").resource_uasage
+		building.queue_free()
+		current_resource += resource_point
+		grid_manager.clear_highlight_tile_maplayer()
+
+func get_building_at_position():
+	var building_components = get_tree().get_nodes_in_group("building_component") as Array[BuildingComponent]
+	for building_component in building_components:
+		if building_component.get_grid_cell_position() == hover_grid_position:
+			return building_component.get_parent()
+	return null

@@ -1,7 +1,7 @@
 class_name GameEvent extends Node
 
 signal building_placed(building_compoent : BuildingComponent)
-
+signal building_destroyed(building_compoent : BuildingComponent)
 static var instance : GameEvent
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,3 +13,6 @@ func _notification(what: int) -> void:
 
 static func emit_building_placed(building_component : BuildingComponent) -> void:
 	instance.building_placed.emit(building_component)
+
+static func emit_building_destroyed(building_component : BuildingComponent) -> void:
+	instance.building_destroyed.emit(building_component)
