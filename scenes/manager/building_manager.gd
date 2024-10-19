@@ -43,12 +43,7 @@ func _on_place_building_press(type : String) -> void:
 			_on_place_villiage_press()
 		_set_build_and_resource_radius(current_building_instance)
 	else:
-		current_state = State.Normal
-		cursor.visible = false
-		if current_building_instance != null:
-			current_building_instance.queue_free()
-			current_building_instance = null
-			grid_manager.clear_highlight_tile_maplayer()
+		cancel_place_building()
 		
 
 func _on_place_tower_press():
@@ -72,6 +67,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		current_building_instance = null
 		cursor.visible = false
 		current_state = State.Normal
+	if event.is_action_pressed("cancel"):
+		cancel_place_building()
 
 func place_building(building_instance):
 	building_instance.global_position = hover_grid_position * 64
@@ -102,6 +99,12 @@ func _process(_delta: float) -> void:
 			cursor.set_valid()
 			grid_manager.highlight_expand_area(hover_grid_position, build_radius, resource_radius)
 		grid_manager.highlight_area()	
-		
-	
 	cursor.global_position = hover_grid_position * 64
+
+func cancel_place_building():
+	current_state = State.Normal
+	cursor.visible = false
+	if current_building_instance != null:
+		current_building_instance.queue_free()
+		current_building_instance = null
+		grid_manager.clear_highlight_tile_maplayer()
