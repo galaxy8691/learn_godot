@@ -7,9 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://dtg73td2ccona" path="res://scenes/building/base.tscn" id="5_i6tb1"]
 [ext_resource type="PackedScene" uid="uid://cy6p1opvnv6yd" path="res://scenes/ui/UI.tscn" id="6_2674h"]
 [ext_resource type="PackedScene" uid="uid://d4h7v24u1b8s2" path="res://scenes/manager/building_manager.tscn" id="7_moycj"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_tvu2y"]
-size = Vector2(64, 64)
+[ext_resource type="PackedScene" uid="uid://bb2y7t1xyr0h5" path="res://scenes/building/building_ghost.tscn" id="8_gkuxf"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_us5cu")
@@ -34,18 +32,17 @@ tile_set = ExtResource("2_7sod3")
 [node name="Base" parent="YSort" instance=ExtResource("5_i6tb1")]
 position = Vector2(576, 320)
 
+[node name="BuildingGhost" parent="YSort" instance=ExtResource("8_gkuxf")]
+y_sort_enabled = true
+
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.513726)
 tile_set = ExtResource("2_067as")
-
-[node name="Cursor" type="Sprite2D" parent="."]
-texture = SubResource("PlaceholderTexture2D_tvu2y")
-centered = false
 
 [node name="Ui" parent="." instance=ExtResource("6_2674h")]
 
 [node name="BuildingManager" parent="." node_paths=PackedStringArray("ysort", "grid_manager", "cursor", "ui") instance=ExtResource("7_moycj")]
 ysort = NodePath("../YSort")
 grid_manager = NodePath("../GridManager")
-cursor = NodePath("../Cursor")
+cursor = NodePath("../YSort/BuildingGhost")
 ui = NodePath("../Ui")

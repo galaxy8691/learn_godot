@@ -13,15 +13,15 @@ var new_collected_resource = []
 func _ready() -> void:
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 	tile_maplayers = _setup_tile_maplayers(base_tile_maplayer)
+	
 
 # func highlight_buildable_area():
 # 	clear_highlight_tile_maplayer()
 # 	for cell in valid_buildable_cells:
 # 		highlight_tile_maplayer.set_cell(cell, 0,Vector2i(0,0))
 
-func highlight_area(grid_vector: Vector2i, build_radius: int, resource_radius: int):
+func highlight_expand_area(grid_vector: Vector2i, build_radius:int, resource_radius):
 	highlight_expand_cells.clear()
-	highlight_tile_maplayer.clear()
 	for x in range(grid_vector.x - build_radius, grid_vector.x + build_radius + 1):
 		for y in range(grid_vector.y-build_radius, grid_vector.y + build_radius + 1):
 			if !_check_cell_is_buildable_tile(Vector2i(x,y)):
@@ -36,6 +36,8 @@ func highlight_area(grid_vector: Vector2i, build_radius: int, resource_radius: i
 				highlight_expand_cells.append(Vector2i(x,y))
 	for cell in highlight_expand_cells:
 		highlight_tile_maplayer.set_cell(cell, 0,Vector2i(1,0))
+
+func highlight_area():
 	for cell in valid_buildable_cells:
 		highlight_tile_maplayer.set_cell(cell, 0,Vector2i(0,0))
 

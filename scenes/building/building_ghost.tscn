@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://bb2y7t1xyr0h5"]
+
+[ext_resource type="Script" path="res://scenes/building/building_ghost.gd" id="1_aqjal"]
+[ext_resource type="PackedScene" uid="uid://rj554ikw8dlh" path="res://assets/buildings/villiage_sprite.tscn" id="1_efm3i"]
+[ext_resource type="PackedScene" uid="uid://dud7i7jcant5f" path="res://assets/buildings/tower_sprite.tscn" id="2_rjvjh"]
+
+[node name="BuildingGhost" type="Node2D"]
+script = ExtResource("1_aqjal")
+
+[node name="VilliageSprite" parent="." instance=ExtResource("1_efm3i")]
+visible = false
+
+[node name="TowerSprite" parent="." instance=ExtResource("2_rjvjh")]
