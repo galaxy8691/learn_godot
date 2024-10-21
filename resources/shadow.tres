@@ -1,0 +1,40 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dggsvpfhnfg6s"]
+
+[ext_resource type="Texture2D" uid="uid://cvylv0hy2rnwk" path="res://assets/tiles/shadows.png" id="1_tn60l"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_15j73"]
+texture = ExtResource("1_tn60l")
+texture_region_size = Vector2i(64, 64)
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrains_peering_bit/bottom_side = 0
+1:0/0/custom_data_0 = true
+1:1/0 = 0
+1:1/0/terrain_set = 0
+1:1/0/terrain = 0
+1:1/0/terrains_peering_bit/right_side = 0
+1:1/0/terrains_peering_bit/bottom_side = 0
+1:1/0/terrains_peering_bit/left_side = 0
+1:1/0/terrains_peering_bit/top_side = 0
+1:1/0/custom_data_0 = true
+1:2/0 = 0
+1:2/0/terrain_set = 0
+1:2/0/terrains_peering_bit/top_side = 0
+1:2/0/custom_data_0 = true
+0:1/0 = 0
+0:1/0/terrain_set = 0
+0:1/0/terrains_peering_bit/right_side = 0
+0:1/0/custom_data_0 = true
+2:1/0 = 0
+2:1/0/terrain_set = 0
+2:1/0/terrains_peering_bit/left_side = 0
+2:1/0/custom_data_0 = true
+
+[resource]
+tile_size = Vector2i(64, 64)
+terrain_set_0/mode = 2
+terrain_set_0/terrain_0/name = "shadow"
+terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
+custom_data_layer_0/name = "is_ignore"
+custom_data_layer_0/type = 1
+sources/0 = SubResource("TileSetAtlasSource_15j73")
