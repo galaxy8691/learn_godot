@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://clijuqkclpmha"]
+[gd_scene load_steps=10 format=4 uid="uid://clijuqkclpmha"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_us5cu"]
 [ext_resource type="PackedScene" uid="uid://chq1wkb67xouj" path="res://scenes/manager/grid_manager.tscn" id="2_1crcp"]
@@ -6,6 +6,7 @@
 [ext_resource type="TileSet" uid="uid://intpdbjtuub4" path="res://resources/hightlight_tile_set.tres" id="2_067as"]
 [ext_resource type="PackedScene" uid="uid://dtg73td2ccona" path="res://scenes/building/base.tscn" id="5_i6tb1"]
 [ext_resource type="PackedScene" uid="uid://cy6p1opvnv6yd" path="res://scenes/ui/UI.tscn" id="6_2674h"]
+[ext_resource type="PackedScene" uid="uid://ckh0iw7knep4y" path="res://scenes/building/gold_mine.tscn" id="6_ltnq0"]
 [ext_resource type="PackedScene" uid="uid://d4h7v24u1b8s2" path="res://scenes/manager/building_manager.tscn" id="7_moycj"]
 [ext_resource type="PackedScene" uid="uid://bb2y7t1xyr0h5" path="res://scenes/building/building_ghost.tscn" id="8_gkuxf"]
 
@@ -34,6 +35,10 @@ position = Vector2(576, 320)
 
 [node name="BuildingGhost" parent="YSort" instance=ExtResource("8_gkuxf")]
 y_sort_enabled = true
+
+[node name="GoldMine" parent="YSort" instance=ExtResource("6_ltnq0")]
+unique_name_in_owner = true
+position = Vector2(896, 192)
 
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.513726)
