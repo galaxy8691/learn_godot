@@ -15,6 +15,7 @@ func _ready() -> void:
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 	GameEvent.instance.building_destroyed.connect(_on_building_destroyed)
 	tile_maplayers = _setup_tile_maplayers(base_tile_maplayer)
+	print(tile_maplayers)
 	
 
 # func highlight_buildable_area():
