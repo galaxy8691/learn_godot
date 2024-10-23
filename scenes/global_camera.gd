@@ -19,3 +19,7 @@ func set_boudery(boudery_rect : Rect2):
 	limit_right = boudery_rect.end.x * 64
 	limit_top = boudery_rect.position.y * 64
 	limit_bottom = boudery_rect.end.y * 64
+
+
+func center_on_base(base_position : Vector2):
+	global_position = base_position

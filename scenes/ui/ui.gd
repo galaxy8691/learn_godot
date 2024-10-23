@@ -1,4 +1,4 @@
-extends MarginContainer
+extends CanvasLayer
 
 class_name  UI
 
@@ -14,6 +14,3 @@ func _ready() -> void:
 		self.place_tower.emit())
 	place_villiage_button.pressed.connect(func ():
 		self.place_villiage.emit())
-
-
-

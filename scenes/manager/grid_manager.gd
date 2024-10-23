@@ -92,8 +92,11 @@ func _check_cell_is_buildable_tile(cell : Vector2i):
 		var custome_data = tile_maplayer.get_cell_tile_data(cell)
 		if custome_data == null:
 			continue
-		return custome_data.get_custom_data("buildable")
-	return false
+		if custome_data.get_custom_data("buildable"):
+			break
+		if custome_data.get_custom_data("wood"):
+			return false
+	return true
 
 
 func _setup_tile_maplayers(tile_maplayer : TileMapLayer) -> Array[TileMapLayer]:
