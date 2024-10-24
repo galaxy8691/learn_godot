@@ -1,4 +1,4 @@
-[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dggsvpfhnfg6s"]
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://becw05y7h1cdx"]
 
 [ext_resource type="Texture2D" uid="uid://cvylv0hy2rnwk" path="res://assets/tiles/shadows.png" id="1_tn60l"]
 
@@ -35,6 +35,6 @@ tile_size = Vector2i(64, 64)
 terrain_set_0/mode = 2
 terrain_set_0/terrain_0/name = "shadow"
 terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
-custom_data_layer_0/name = "is_ignore"
+custom_data_layer_0/name = "ignore"
 custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_15j73")
