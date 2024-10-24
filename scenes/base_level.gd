@@ -17,15 +17,12 @@ func _ready():
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 
 func _on_building_placed(building_compoent : BuildingComponent):
-	var gold_mine_position = gold_mine.global_position
-	gold_mine_position = (Vector2i) (gold_mine_position / 64)
-	var building_position = building_compoent.get_grid_cell_position()
-	var building_range = building_compoent.buildable_radius    
-	for x in range(building_position.x - building_range, building_position.x + building_range + 1):
-		for y in range(building_position.y - building_range, building_position.y + building_range + 1):
-			if gold_mine_position == Vector2i(x,y):
-				gold_mine.set_active()          
-				return
-			else:
-				gold_mine.set_inactive()
+	var gold_mine_position_building_component = gold_mine.get_node("BuildingComponent")
+	var gold_mine_occupation_cells = gold_mine_position_building_component.get_occupation_cells()
+	var building_buildable_cells = building_compoent.get_buildable_cells()
+	for cell in building_buildable_cells:
+		if cell in gold_mine_occupation_cells:
+			gold_mine.set_active()
+			break
+
 

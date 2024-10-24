@@ -16,7 +16,7 @@ var place_building_type = "tower" # tower or villiage
 @export var cursor : BuildingGhost
 var hover_grid_position : Vector2i = Vector2i.MAX
 @export var ui : UI
-var current_resource = 4
+@export var current_resource = 4
 var current_state : State = State.Normal
 
 # Called when the node enters the scene tree for the first time.
@@ -61,7 +61,7 @@ func _set_build_and_resource_radius(building_instance):
 func _unhandled_input(event: InputEvent) -> void:
 	if current_state == State.Building:
 		if event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX \
-		&& grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position) \
+		&& grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position, current_building_instance.get_node("BuildingComponent").occupation_size) \
 		&& current_resource >= current_building_instance.get_node("BuildingComponent").resource_uasage:
 			current_resource -= current_building_instance.get_node("BuildingComponent").resource_uasage
 			place_building(current_building_instance)
@@ -101,11 +101,11 @@ func _process(_delta: float) -> void:
 		grid_manager.clear_highlight_tile_maplayer()
 	elif current_state == State.Building:
 		grid_manager.clear_highlight_tile_maplayer()
-		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position):
+		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size):
 			cursor.set_invalid()
 		else:
 			cursor.set_valid()
-			grid_manager.highlight_expand_area(hover_grid_position, build_radius, resource_radius)
+			grid_manager.highlight_expand_area(hover_grid_position, current_building_instance.get_node("BuildingComponent"))
 		grid_manager.highlight_area()	
 	cursor.global_position = hover_grid_position * 64
 
@@ -113,7 +113,7 @@ func cancel_place_building():
 	current_state = State.Normal
 	cursor.visible = false
 	if current_building_instance != null:
-		grid_manager.remove_placed_building(current_building_instance.get_node("BuildingComponent"))
+		#grid_manager.remove_placed_building(current_building_instance.get_node("BuildingComponent"))
 		current_building_instance.queue_free()
 		current_building_instance = null
 		grid_manager.clear_highlight_tile_maplayer()

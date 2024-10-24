@@ -24,6 +24,7 @@ ysort = NodePath("../YSort")
 grid_manager = NodePath("../GridManager")
 cursor = NodePath("../YSort/BuildingGhost")
 ui = NodePath("../Ui")
+current_resource = 5
 
 [node name="GlobalCamera" type="Camera2D" parent="."]
 script = ExtResource("4_eotec")
@@ -66,7 +67,7 @@ y_sort_enabled = true
 
 [node name="GoldMine" parent="YSort" instance=ExtResource("5_yyp2l")]
 unique_name_in_owner = true
-position = Vector2(896, 192)
+position = Vector2(832, 192)
 
 [node name="Base" parent="YSort" instance=ExtResource("6_ke1uj")]
 unique_name_in_owner = true

@@ -9,5 +9,6 @@ y_sort_enabled = true
 [node name="BuildingComponent" parent="." instance=ExtResource("1_aamqx")]
 resource_radius = 2
 resource_uasage = 4
+occupation_size = Vector2i(2, 2)
 
 [node name="VilliageSprite" parent="." instance=ExtResource("2_7coe7")]

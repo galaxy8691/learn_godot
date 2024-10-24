@@ -17,3 +17,4 @@ offset = Vector2(-32, -32)
 
 [node name="BuildingComponent" parent="." instance=ExtResource("1_ikic6")]
 buildable_radius = 2
+occupation_size = Vector2i(1, 1)
