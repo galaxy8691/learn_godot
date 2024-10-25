@@ -6,6 +6,7 @@ class_name GridManager
 #@export var base_tile_maplayer : TileMapLayer
 @export var tile_managers : Array[TileManager] = []
 @export var resource_tile_maplayer : TileMapLayer
+@export var base_tile_manager : TileManager
 var valid_buildable_cells = []
 var placed_buildings = []
 var highlight_expand_cells = []
@@ -15,7 +16,7 @@ var new_collected_resource = []
 func _ready() -> void:
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 	GameEvent.instance.building_destroyed.connect(_on_building_destroyed)
-	#tile_maplayers = _setup_tile_maplayers(base_tile_maplayer)
+	_setup_tile_managers()
 	
 
 # func highlight_buildable_area():
@@ -96,13 +97,24 @@ func _check_cell_is_buildable_tile(cell : Vector2i):
 	return result
 
 
-func _setup_tile_maplayers(tile_maplayer : TileMapLayer) -> Array[TileMapLayer]:
-	var array : Array[TileMapLayer] = []
-	for child in tile_maplayer.get_children():
-		if child is TileMapLayer:
-			array.append_array(_setup_tile_maplayers(child))
-	array.append(tile_maplayer)
-	return array
+func _setup_tile_managers():   
+	var base_rect = base_tile_manager.get_node("TileMapLayer").get_used_rect()
+	var start_cell = base_rect.position
+	var end_cell = base_rect.end
+	for x in range(start_cell.x, end_cell.x):
+		for y in range(start_cell.y, end_cell.y):
+			var cell = Vector2i(x,y)
+			var valid_for_managers = []
+			for i in range(len(tile_managers)):
+				if tile_managers[i].get_cell_tile_data(cell) != null:
+					valid_for_managers.append(i)
+			if valid_for_managers.size() > 1:
+				var max_i = valid_for_managers[0]
+				for i in valid_for_managers:
+					if tile_managers[i].level > tile_managers[max_i].level:
+						max_i = i
+				tile_managers[max_i].add_cell(cell)
+	return null
 
 
 func _remove_building_from_building_area():
