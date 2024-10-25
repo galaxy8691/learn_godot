@@ -3,15 +3,15 @@ extends Node
 
 var gold_mine : GoldMine
 var camera : GlobalCamera
-var base_tilemaplayer : TileMapLayer
+var base_tilemaplayer : TileManager
 var base : Node2D
 
 func _ready():
 	gold_mine = %GoldMine
 	camera = $GlobalCamera
-	base_tilemaplayer = %BaseTileMapLayer
+	base_tilemaplayer = %BaseTileManager
 	base = %Base
-	camera.set_boudery(base_tilemaplayer.get_used_rect())
+	camera.set_boudery(base_tilemaplayer.get_node("TileMapLayer").get_used_rect())
 	
 	camera.center_on_base(base.global_position)
 	GameEvent.instance.building_placed.connect(_on_building_placed)
@@ -24,5 +24,3 @@ func _on_building_placed(building_compoent : BuildingComponent):
 		if cell in gold_mine_occupation_cells:
 			gold_mine.set_active()
 			break
-
-

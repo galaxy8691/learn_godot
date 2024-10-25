@@ -3,8 +3,9 @@ extends Node
 class_name GridManager
 
 @export var highlight_tile_maplayer : TileMapLayer
-@export var base_tile_maplayer : TileMapLayer
-
+#@export var base_tile_maplayer : TileMapLayer
+@export var tile_managers : Array[TileManager] = []
+@export var resource_tile_maplayer : TileMapLayer
 var valid_buildable_cells = []
 var placed_buildings = []
 var highlight_expand_cells = []
@@ -14,8 +15,7 @@ var new_collected_resource = []
 func _ready() -> void:
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 	GameEvent.instance.building_destroyed.connect(_on_building_destroyed)
-	tile_maplayers = _setup_tile_maplayers(base_tile_maplayer)
-	print(tile_maplayers)
+	#tile_maplayers = _setup_tile_maplayers(base_tile_maplayer)
 	
 
 # func highlight_buildable_area():
