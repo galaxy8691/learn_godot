@@ -1,20 +1,14 @@
 [gd_scene load_steps=3 format=3 uid="uid://dtg73td2ccona"]
 
 [ext_resource type="PackedScene" uid="uid://ix48ftnmiref" path="res://scenes/component/building_component.tscn" id="1_ikic6"]
-
-[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dvsps"]
-size = Vector2(64, 64)
+[ext_resource type="PackedScene" uid="uid://dr2ytxv42ik8c" path="res://assets/buildings/base_sprite.tscn" id="2_06oiu"]
 
 [node name="Base" type="Node2D"]
 y_sort_enabled = true
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-y_sort_enabled = true
-position = Vector2(32, 32)
-texture = SubResource("PlaceholderTexture2D_dvsps")
-centered = false
-offset = Vector2(-32, -32)
-
 [node name="BuildingComponent" parent="." instance=ExtResource("1_ikic6")]
 buildable_radius = 2
-occupation_size = Vector2i(1, 1)
+occupation_size = Vector2i(5, 3)
+deletable = false
+
+[node name="BaseSprite" parent="." instance=ExtResource("2_06oiu")]

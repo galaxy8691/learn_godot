@@ -4,6 +4,7 @@ class_name BuildingComponent extends Node2D
 @export var resource_radius : int
 @export var resource_uasage : int
 @export var occupation_size : Vector2i
+@export var deletable : bool = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:

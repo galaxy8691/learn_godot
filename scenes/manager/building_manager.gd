@@ -75,8 +75,9 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("right_click"):
 			var building = get_building_at_position()
 			if building:
-				GameEvent.emit_building_destroyed(building.get_node("BuildingComponent"))
-				destroy_building(building)
+				if building.get_node("BuildingComponent").deletable:
+					GameEvent.emit_building_destroyed(building.get_node("BuildingComponent"))
+					destroy_building(building)
 
 func place_building(building_instance):
 	building_instance.global_position = hover_grid_position * 64
@@ -127,6 +128,6 @@ func destroy_building(building):
 func get_building_at_position():
 	var building_components = get_tree().get_nodes_in_group("building_component") as Array[BuildingComponent]
 	for building_component in building_components:
-		if building_component.get_grid_cell_position() == hover_grid_position:
+		if hover_grid_position in building_component.get_occupation_cells():
 			return building_component.get_parent()
 	return null

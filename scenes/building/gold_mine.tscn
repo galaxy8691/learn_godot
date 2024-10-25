@@ -24,3 +24,4 @@ offset = Vector2(-96, -102)
 
 [node name="BuildingComponent" parent="." instance=ExtResource("4_eqv40")]
 occupation_size = Vector2i(3, 2)
+deletable = false

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://dr2ytxv42ik8c"]
+
+[ext_resource type="Texture2D" uid="uid://dwlwy1e13mwyh" path="res://assets/buildings/castle_white.png" id="1_65jux"]
+
+[node name="BaseSprite" type="Sprite2D"]
+position = Vector2(160, 160)
+texture = ExtResource("1_65jux")
+centered = false
+offset = Vector2(-160, -226)
