@@ -16,8 +16,8 @@ var new_collected_resource = []
 func _ready() -> void:
 	GameEvent.instance.building_placed.connect(_on_building_placed)
 	GameEvent.instance.building_destroyed.connect(_on_building_destroyed)
-	_setup_tile_managers()
-	
+	#_setup_tile_managers()
+	GameEvent.instance.initial_buildings_ready.connect(_on_initial_buildings_ready)
 
 # func highlight_buildable_area():
 # 	clear_highlight_tile_maplayer()
@@ -49,12 +49,10 @@ func highlight_area():
 		highlight_tile_maplayer.set_cell(cell, 0,Vector2i(0,0))
 
 func _check_cell_is_wood_tile(cell : Vector2i):
-	for tile_maplayer in tile_maplayers:
-		var custome_data = tile_maplayer.get_cell_tile_data(cell)
-		if custome_data == null:
-			continue
-		return custome_data.get_custom_data("wood")
-	return false
+	var tile_data = resource_tile_maplayer.get_cell_tile_data(cell)
+	if tile_data == null:
+		return false
+	return tile_data.get_custom_data("wood")
 
 func _update_collected_resource(buildable_compoent: BuildingComponent):
 	var cells : Array[Vector2i] = buildable_compoent.get_resource_cells()
@@ -84,17 +82,13 @@ func clear_highlight_tile_maplayer():
 	highlight_tile_maplayer.clear()
 
 func _check_cell_is_buildable_tile(cell : Vector2i):
-	var result = true
-	for tile_maplayer in tile_maplayers:
-		var custome_data = tile_maplayer.get_cell_tile_data(cell)
-		if custome_data == null:
-			continue
-		if custome_data.get_custom_data("ignore"):
-			continue    
-		if !custome_data.get_custom_data("buildable"):
-			result = false
+	var result = false
+	for tile_manager in tile_managers:
+		if tile_manager.check_cell_is_buildable(cell):
+			result = true
 			break
 	return result
+
 
 
 func _setup_tile_managers():   
@@ -105,6 +99,8 @@ func _setup_tile_managers():
 		for y in range(start_cell.y, end_cell.y):
 			var cell = Vector2i(x,y)
 			var valid_for_managers = []
+			if _check_cell_is_wood_tile(cell):
+				continue
 			for i in range(len(tile_managers)):
 				if tile_managers[i].get_cell_tile_data(cell) != null:
 					valid_for_managers.append(i)
@@ -125,10 +121,18 @@ func _remove_building_from_building_area():
 
 func check_cell_is_in_buiding_area_and_not_occupied(cell : Vector2i, area_size : Vector2i):
 	var result = true
-	for x in range(cell.x, cell.x + area_size.x):
+	var cells : Array[Vector2i] = []
+	for x in range(cell.x, cell.x + area_size.x):   
 		for y in range(cell.y, cell.y + area_size.y):
+			cells.append(Vector2i(x,y))
 			if Vector2i(x,y) not in valid_buildable_cells:
 				result = false
+				break
+	if result == true:
+		result = false
+		for tile_manager in tile_managers:
+			if tile_manager.check_cells_in_occupied_cells(cells):
+				result = true
 				break
 	return result
 
@@ -146,3 +150,9 @@ func _remove_placed_building(building_component: BuildingComponent):
 
 func _add_placed_building(building_component: BuildingComponent):
 	placed_buildings.append(building_component)
+
+func _on_initial_buildings_ready(buildings : Array[BuildingComponent]):
+	_setup_tile_managers()
+	for building in buildings:
+		_add_placed_building(building)
+	_update_valid_buildable_cells()
