@@ -1,17 +1,17 @@
 extends Node
-
+class_name BaseLevel
 
 var gold_mine : GoldMine
 var camera : GlobalCamera
-var base_tilemaplayer : TileManager
+var base_tilemaplayer : CellTileMapLayer
 var base : Node2D
 
 func _ready():
 	gold_mine = %GoldMine
 	camera = $GlobalCamera
-	base_tilemaplayer = %BaseTileManager
+	base_tilemaplayer = %BaseTileMapLayer
 	base = %Base
-	camera.set_boudery(base_tilemaplayer.get_node("TileMapLayer").get_used_rect())
+	camera.set_boudery(base_tilemaplayer.get_used_rect())
 	
 	camera.center_on_base(base.global_position)
 	GameEvent.instance.building_placed.connect(_on_building_placed)

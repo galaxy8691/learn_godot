@@ -12,3 +12,5 @@ occupation_size = Vector2i(5, 3)
 deletable = false
 
 [node name="BaseSprite" parent="." instance=ExtResource("2_06oiu")]
+y_sort_enabled = true
+offset = Vector2(-160, -248)

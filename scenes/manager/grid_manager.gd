@@ -4,9 +4,9 @@ class_name GridManager
 
 @export var highlight_tile_maplayer : TileMapLayer
 #@export var base_tile_maplayer : TileMapLayer
-@export var tile_managers : Array[TileManager] = []
+@export var cell_tile_maplayers : Array[CellTileMapLayer] = []
 @export var resource_tile_maplayer : TileMapLayer
-@export var base_tile_manager : TileManager
+@export var base_tilemaplayer : CellTileMapLayer
 var valid_buildable_cells = []
 var placed_buildings = []
 var highlight_expand_cells = []
@@ -61,6 +61,7 @@ func _update_collected_resource(buildable_compoent: BuildingComponent):
 			if collected_resource.find(cell) == -1:
 				collected_resource.append(cell)
 				new_collected_resource.append(cell)
+	
 
 func get_new_collected_resource_point():
 	var point = len(new_collected_resource)
@@ -83,7 +84,7 @@ func clear_highlight_tile_maplayer():
 
 func _check_cell_is_buildable_tile(cell : Vector2i):
 	var result = false
-	for tile_manager in tile_managers:
+	for tile_manager in cell_tile_maplayers:
 		if tile_manager.check_cell_is_buildable(cell):
 			result = true
 			break
@@ -92,7 +93,7 @@ func _check_cell_is_buildable_tile(cell : Vector2i):
 
 
 func _setup_tile_managers():   
-	var base_rect = base_tile_manager.get_node("TileMapLayer").get_used_rect()
+	var base_rect = base_tilemaplayer.get_used_rect()
 	var start_cell = base_rect.position
 	var end_cell = base_rect.end
 	for x in range(start_cell.x, end_cell.x):
@@ -101,15 +102,15 @@ func _setup_tile_managers():
 			var valid_for_managers = []
 			if _check_cell_is_wood_tile(cell):
 				continue
-			for i in range(len(tile_managers)):
-				if tile_managers[i].get_cell_tile_data(cell) != null:
+			for i in range(len(cell_tile_maplayers)):
+				if cell_tile_maplayers[i].get_cell_tile_data(cell) != null:
 					valid_for_managers.append(i)
 			if valid_for_managers.size() > 1:
 				var max_i = valid_for_managers[0]
 				for i in valid_for_managers:
-					if tile_managers[i].level > tile_managers[max_i].level:
+					if cell_tile_maplayers[i].level > cell_tile_maplayers[max_i].level:
 						max_i = i
-				tile_managers[max_i].add_cell(cell)
+				cell_tile_maplayers[max_i].add_cell(cell)
 	return null
 
 
@@ -130,7 +131,7 @@ func check_cell_is_in_buiding_area_and_not_occupied(cell : Vector2i, area_size :
 				break
 	if result == true:
 		result = false
-		for tile_manager in tile_managers:
+		for tile_manager in cell_tile_maplayers:
 			if tile_manager.check_cells_in_occupied_cells(cells):
 				result = true
 				break

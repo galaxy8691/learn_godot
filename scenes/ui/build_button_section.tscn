@@ -1,0 +1,56 @@
+[gd_scene load_steps=4 format=3 uid="uid://dwmu73g21k1q6"]
+
+[ext_resource type="Texture2D" uid="uid://chlkqk6k1af7a" path="res://assets/ui/w_idle.png" id="1_5qpvy"]
+[ext_resource type="Script" path="res://scenes/ui/build_button_section.gd" id="1_vlbwh"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_brl6t"]
+atlas = ExtResource("1_5qpvy")
+region = Rect2(39, 60, 49, 40)
+
+[node name="PanelContainer" type="PanelContainer"]
+theme_type_variation = &"PanelContainerVariant"
+script = ExtResource("1_vlbwh")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="BuildingNameLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Tower"
+horizontal_alignment = 1
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_top = -8
+theme_override_constants/margin_bottom = 8
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 8
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = SubResource("AtlasTexture_brl6t")
+
+[node name="ResourceCostLabel" type="Label" parent="VBoxContainer/MarginContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "4"
+
+[node name="DescriptionLabel" type="Label" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Increase buiding range"
+horizontal_alignment = 1
+
+[node name="BuildButton" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Select"
