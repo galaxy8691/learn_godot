@@ -5,12 +5,16 @@ var gold_mine : GoldMine
 var camera : GlobalCamera
 var base_tilemaplayer : CellTileMapLayer
 var base : Node2D
+var ui : CanvasLayer
+var win_button_section : CanvasLayer
 
 func _ready():
 	gold_mine = %GoldMine
 	camera = $GlobalCamera
 	base_tilemaplayer = %BaseTileMapLayer
 	base = %Base
+	ui = $Ui
+	win_button_section = $WinButtonSection
 	camera.set_boudery(base_tilemaplayer.get_used_rect())
 	
 	camera.center_on_base(base.global_position)
@@ -22,5 +26,11 @@ func _on_building_placed(building_compoent : BuildingComponent):
 	var building_buildable_cells = building_compoent.get_buildable_cells()
 	for cell in building_buildable_cells:
 		if cell in gold_mine_occupation_cells:
-			gold_mine.set_active()
+			_win()
 			break
+
+func _win():
+	gold_mine.set_active()
+	ui.visible = false
+	win_button_section.visible = true
+	

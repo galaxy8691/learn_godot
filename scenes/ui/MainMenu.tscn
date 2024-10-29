@@ -1,5 +1,6 @@
-[gd_scene load_steps=7 format=4 uid="uid://dwquql3ldh1ud"]
+[gd_scene load_steps=8 format=4 uid="uid://dwquql3ldh1ud"]
 
+[ext_resource type="Script" path="res://scenes/ui/main_menu.gd" id="1_wvbuv"]
 [ext_resource type="Script" path="res://scenes/y_sort.gd" id="1_x05jw"]
 [ext_resource type="PackedScene" uid="uid://ckh0iw7knep4y" path="res://scenes/building/gold_mine.tscn" id="2_t8ef8"]
 [ext_resource type="PackedScene" uid="uid://dtg73td2ccona" path="res://scenes/building/base.tscn" id="3_5k70d"]
@@ -8,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://d2lgrxg4lhe8x" path="res://scenes/manager/tile_manager.tscn" id="6_o4c7l"]
 
 [node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_wvbuv")
 
 [node name="YSort" type="Node2D" parent="."]
 modulate = Color(0.31802, 0.31802, 0.31802, 1)
@@ -99,6 +101,7 @@ layout_mode = 2
 theme_override_constants/separation = 20
 
 [node name="PlayButton" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 40
 text = "Play"

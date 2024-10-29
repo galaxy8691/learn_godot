@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=4 uid="uid://clijuqkclpmha"]
+[gd_scene load_steps=15 format=4 uid="uid://clijuqkclpmha"]
 
 [ext_resource type="Script" path="res://scenes/level/base_level.gd" id="1_wypcp"]
 [ext_resource type="PackedScene" uid="uid://chq1wkb67xouj" path="res://scenes/manager/grid_manager.tscn" id="2_gw062"]
@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://cy6p1opvnv6yd" path="res://scenes/ui/UI.tscn" id="8_kvybp"]
 [ext_resource type="PackedScene" uid="uid://d4h7v24u1b8s2" path="res://scenes/manager/building_manager.tscn" id="9_wc8bq"]
 [ext_resource type="Script" path="res://scenes/manager/cell_tile_map_layer.gd" id="10_gjwv1"]
+[ext_resource type="PackedScene" uid="uid://7pa4v80mp2ne" path="res://scenes/ui/win_button_section.tscn" id="14_381q7"]
 
 [node name="BaseLevel" type="Node"]
 script = ExtResource("1_wypcp")
@@ -89,3 +90,6 @@ modulate = Color(1, 1, 1, 0.513726)
 tile_set = ExtResource("7_yeexo")
 
 [node name="Ui" parent="." instance=ExtResource("8_kvybp")]
+
+[node name="WinButtonSection" parent="." instance=ExtResource("14_381q7")]
+visible = false
