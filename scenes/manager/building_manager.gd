@@ -115,7 +115,7 @@ func _process(_delta: float) -> void:
 			cursor.set_valid()
 			grid_manager.highlight_expand_area(hover_grid_position, current_building_instance.get_node("BuildingComponent"))
 		grid_manager.highlight_area()	
-	cursor.global_position = hover_grid_position * 64
+	# cursor.global_position = hover_grid_position * 64
 
 func cancel_place_building():
 	current_state = State.Normal

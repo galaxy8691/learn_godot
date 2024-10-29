@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://clijuqkclpmha"]
+[gd_scene load_steps=17 format=4 uid="uid://clijuqkclpmha"]
 
 [ext_resource type="Script" path="res://scenes/level/base_level.gd" id="1_wypcp"]
 [ext_resource type="PackedScene" uid="uid://chq1wkb67xouj" path="res://scenes/manager/grid_manager.tscn" id="2_gw062"]
@@ -15,8 +15,35 @@
 [ext_resource type="Script" path="res://scenes/manager/cell_tile_map_layer.gd" id="10_gjwv1"]
 [ext_resource type="PackedScene" uid="uid://7pa4v80mp2ne" path="res://scenes/ui/win_button_section.tscn" id="14_381q7"]
 
+[sub_resource type="Animation" id="Animation_smhfq"]
+resource_name = "building_ghose_move"
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [Vector2i(0, 0)],
+"method": &"move_building_ghost"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_47sun"]
+_data = {
+"building_ghose_move": SubResource("Animation_smhfq")
+}
+
 [node name="BaseLevel" type="Node"]
 script = ExtResource("1_wypcp")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_47sun")
+}
 
 [node name="BuildingManager" parent="." node_paths=PackedStringArray("ysort", "grid_manager", "cursor", "ui") instance=ExtResource("9_wc8bq")]
 ysort = NodePath("../YSort")
@@ -83,7 +110,8 @@ unique_name_in_owner = true
 position = Vector2(256, 320)
 
 [node name="BuildingGhost" parent="YSort" instance=ExtResource("4_u8g3m")]
-y_sort_enabled = true
+unique_name_in_owner = true
+z_index = 1
 
 [node name="HighlightTileMapLayer" type="TileMapLayer" parent="."]
 modulate = Color(1, 1, 1, 0.513726)
