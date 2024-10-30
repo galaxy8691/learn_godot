@@ -44,11 +44,14 @@ func _process(_delta: float) -> void:
 	move_building_ghost()
 	
 func move_building_ghost():
-	var mouse_position = base.get_global_mouse_position()
+	var mouse_position = base.get_global_mouse_position() - building_ghost.get_building_offset()
 	var mouse_cell_position = mouse_position / 64 as Vector2i
+	
 	if current_mouse_cell_position != mouse_cell_position:
 		current_mouse_cell_position = mouse_cell_position
 		mouse_cell_position = mouse_cell_position as Vector2
+		if tween != null and tween.is_valid():
+			tween.kill()
 		tween = create_tween()
 		tween.tween_property(building_ghost, "global_position", mouse_cell_position * 64, 0.5).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	# building_ghost.global_position = mouse_cell_position * 64

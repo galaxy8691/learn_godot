@@ -8,6 +8,7 @@ var is_valid : bool = false
 var top_right_sprite : Sprite2D
 var bottom_left_sprite : Sprite2D
 var bottom_right_sprite : Sprite2D
+var current_type : String = "tower"
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	tower_sprite = $TowerSprite
@@ -18,12 +19,14 @@ func _ready() -> void:
 
 func set_building_type(type : String) -> void:
 	if type == "tower":
+		current_type = "tower"
 		tower_sprite.visible = true
 		villiage_sprite.visible = false
 		top_right_sprite.position = Vector2(2*64,0)
 		bottom_left_sprite.position = Vector2(0,2*64)
 		bottom_right_sprite.position = Vector2(2*64,2*64)
 	else:
+		current_type = "villiage"
 		tower_sprite.visible = false
 		villiage_sprite.visible = true
 		top_right_sprite.position = Vector2(2*64,0)
@@ -39,3 +42,9 @@ func set_invalid() -> void:
 func set_valid() -> void:
 	is_valid = true
 	modulate = Color(1,1,1)
+
+func get_building_offset() -> Vector2:
+	if current_type == "tower":
+		return Vector2(1*32,1*64)
+	else:
+		return Vector2(1*32,1*64)

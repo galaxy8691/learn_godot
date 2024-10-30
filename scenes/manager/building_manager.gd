@@ -11,7 +11,7 @@ var villiage : PackedScene = load("res://scenes/building/villiage.tscn")
 @export var grid_manager : GridManager
 var build_radius = 3
 var resource_radius = 3
-var current_building_instance = null;
+var current_building_instance : Node2D = null;
 var place_building_type = "tower" # tower or villiage
 @export var cursor : BuildingGhost
 var hover_grid_position : Vector2i = Vector2i.MAX
@@ -89,14 +89,15 @@ func _unhandled_input(event: InputEvent) -> void:
 func place_building(building_instance):
 	building_instance.global_position = hover_grid_position * 64
 	ysort.add_child(building_instance)
+	building_instance.get_node("AnimationPlayer").play("place")
 	grid_manager.clear_highlight_tile_maplayer()
 
 
 
 
 
-func get_mouse_grid_cell_position() -> Vector2i:
-	var mouse_position = cursor.get_global_mouse_position()
+func get_mouse_grid_cell_position(offset : Vector2 = Vector2(0,0)) -> Vector2i:
+	var mouse_position = cursor.get_global_mouse_position() - offset
 	var grid_position = mouse_position / 64
 	grid_position = grid_position.floor()
 	return grid_position
@@ -104,10 +105,11 @@ func get_mouse_grid_cell_position() -> Vector2i:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	hover_grid_position = get_mouse_grid_cell_position()
 	if current_state == State.Normal:
+		hover_grid_position = get_mouse_grid_cell_position()
 		grid_manager.clear_highlight_tile_maplayer()
 	elif current_state == State.Building:
+		hover_grid_position = get_mouse_grid_cell_position(cursor.get_building_offset())
 		grid_manager.clear_highlight_tile_maplayer()
 		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size):
 			cursor.set_invalid()
@@ -115,7 +117,6 @@ func _process(_delta: float) -> void:
 			cursor.set_valid()
 			grid_manager.highlight_expand_area(hover_grid_position, current_building_instance.get_node("BuildingComponent"))
 		grid_manager.highlight_area()	
-	# cursor.global_position = hover_grid_position * 64
 
 func cancel_place_building():
 	current_state = State.Normal
@@ -128,7 +129,8 @@ func cancel_place_building():
 
 func destroy_building(building):
 		var resource_point = building.get_node("BuildingComponent").resource_uasage
-		building.queue_free()
+		#building.queue_free()
+		building.get_node("AnimationPlayer").play("destroy")
 		_set_current_resource(current_resource + resource_point)
 		grid_manager.clear_highlight_tile_maplayer()
 

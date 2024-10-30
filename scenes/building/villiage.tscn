@@ -1,14 +1,122 @@
-[gd_scene load_steps=3 format=3 uid="uid://qlow08ah47eb"]
+[gd_scene load_steps=8 format=3 uid="uid://qlow08ah47eb"]
 
 [ext_resource type="PackedScene" uid="uid://ix48ftnmiref" path="res://scenes/component/building_component.tscn" id="1_aamqx"]
 [ext_resource type="PackedScene" uid="uid://rj554ikw8dlh" path="res://assets/buildings/villiage_sprite.tscn" id="2_7coe7"]
+[ext_resource type="Texture2D" uid="uid://1t10dhrweam4" path="res://assets/buildings/building_mask.png" id="2_qdqxk"]
+
+[sub_resource type="Animation" id="Animation_v3flm"]
+resource_name = "place"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/VilliageSprite:offset")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(-64, -254), Vector2(-64, -154), Vector2(-64, -170), Vector2(-64, -154)]
+}
+
+[sub_resource type="Animation" id="Animation_2lir2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/VilliageSprite:offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-64, -154)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/VilliageSprite:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_xc7pm"]
+resource_name = "destroy"
+length = 0.5
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D/VilliageSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, 0.174533, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D/VilliageSprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-64, -154), Vector2(-64, -154), Vector2(-64, -5)]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y2qlu"]
+_data = {
+"RESET": SubResource("Animation_2lir2"),
+"destroy": SubResource("Animation_xc7pm"),
+"place": SubResource("Animation_v3flm")
+}
 
 [node name="Villiage" type="Node2D"]
 y_sort_enabled = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_y2qlu")
+}
 
 [node name="BuildingComponent" parent="." instance=ExtResource("1_aamqx")]
 resource_radius = 4
 resource_uasage = 4
 occupation_size = Vector2i(2, 2)
 
-[node name="VilliageSprite" parent="." instance=ExtResource("2_7coe7")]
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 1
+y_sort_enabled = true
+texture = ExtResource("2_qdqxk")
+centered = false
+offset = Vector2(-96, -138)
+
+[node name="VilliageSprite" parent="Sprite2D" instance=ExtResource("2_7coe7")]
+scale = Vector2(1, 1)
