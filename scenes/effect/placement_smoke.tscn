@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4i87y0w8tu21"]
+
+[ext_resource type="Texture2D" uid="uid://coa2hkf48u0ps" path="res://assets/effects/particle.png" id="1_iera1"]
+
+[sub_resource type="Curve" id="Curve_5d5fl"]
+_data = [Vector2(0, 0.802198), 0.0, 0.0, 0, 0, Vector2(0.229299, 1), 0.0, 0.0, 0, 1, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_pbimd"]
+curve = SubResource("Curve_5d5fl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_j5m7l"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 16.0
+angle_min = -350.0
+angle_max = 360.0
+spread = 15.0
+initial_velocity_min = 700.0
+initial_velocity_max = 700.0
+angular_velocity_min = -200.0
+angular_velocity_max = 200.0
+orbit_velocity_min = 9.49949e-08
+orbit_velocity_max = 0.1
+radial_velocity_min = 50.0
+radial_velocity_max = 100.0
+gravity = Vector3(0, -150, 0)
+damping_min = 400.0
+damping_max = 800.0
+scale_curve = SubResource("CurveTexture_pbimd")
+
+[node name="PlacementSmoke" type="Node2D"]
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_j5m7l")
+texture = ExtResource("1_iera1")
+lifetime = 0.8
+one_shot = true
+
+[node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+rotation = -3.14159
+emitting = false
+amount = 12
+process_material = SubResource("ParticleProcessMaterial_j5m7l")
+texture = ExtResource("1_iera1")
+lifetime = 0.8
+one_shot = true
