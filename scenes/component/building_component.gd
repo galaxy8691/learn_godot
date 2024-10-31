@@ -3,8 +3,13 @@ class_name BuildingComponent extends Node2D
 @export var buildable_radius : int 
 @export var resource_radius : int
 @export var resource_uasage : int
+@export var danger_radius : int
 @export var occupation_size : Vector2i
 @export var deletable : bool = true
+
+
+@export var control_type : BuildingConstant.ControlType = BuildingConstant.ControlType.buildable
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,18 +31,23 @@ func get_occupation_cells() -> Array[Vector2i]:
 			cells.append(Vector2i(x,y))
 	return cells
 
-func get_resource_cells() -> Array[Vector2i]:
+
+func get_control_cells() -> Array[Vector2i]:
+	var radius = 0
+	if control_type == BuildingConstant.ControlType.buildable:
+		radius = buildable_radius
+	elif control_type == BuildingConstant.ControlType.resource:
+		radius = resource_radius
+	elif control_type == BuildingConstant.ControlType.danger:
+		radius = danger_radius
 	var cells : Array[Vector2i] = []
 	var cell_area = get_grid_cell_area()
-	for x in range(cell_area.position.x - resource_radius, cell_area.end.x + resource_radius ):
-		for y in range(cell_area.position.y - resource_radius, cell_area.end.y + resource_radius ):
+	for x in range(cell_area.position.x - radius, cell_area.end.x + radius ):
+		for y in range(cell_area.position.y - radius, cell_area.end.y + radius ):
 			cells.append(Vector2i(x,y))
 	return cells
 
-func get_buildable_cells() -> Array[Vector2i]:
-	var cells : Array[Vector2i] = []
-	var cell_area = get_grid_cell_area()
-	for x in range(cell_area.position.x - buildable_radius, cell_area.end.x + buildable_radius ):
-		for y in range(cell_area.position.y - buildable_radius, cell_area.end.y + buildable_radius ):
-			cells.append(Vector2i(x,y))
-	return cells
+func check_cell_is_in_control_area(cell: Vector2i) -> bool:
+	var control_cells = get_control_cells()
+	return control_cells.has(cell)
+	

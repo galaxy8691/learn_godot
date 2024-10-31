@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://dfw7q12vy5ro4"]
+
+[ext_resource type="Texture2D" uid="uid://j1oldh632rrp" path="res://assets/buildings/wood_tower_red.png" id="1_sfhrf"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_row7c"]
+atlas = ExtResource("1_sfhrf")
+region = Rect2(0, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krowq"]
+atlas = ExtResource("1_sfhrf")
+region = Rect2(256, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86omq"]
+atlas = ExtResource("1_sfhrf")
+region = Rect2(512, 0, 256, 192)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bfoue"]
+atlas = ExtResource("1_sfhrf")
+region = Rect2(768, 0, 256, 192)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g0jdl"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_row7c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krowq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86omq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bfoue")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="GoblinCamp" type="AnimatedSprite2D"]
+position = Vector2(64, 96)
+sprite_frames = SubResource("SpriteFrames_g0jdl")
+autoplay = "default"
+frame_progress = 0.0555516
+centered = false
+offset = Vector2(-128, -151)

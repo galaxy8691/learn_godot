@@ -26,7 +26,7 @@ func _ready():
 func _on_building_placed(building_compoent : BuildingComponent):
 	var gold_mine_position_building_component = gold_mine.get_node("BuildingComponent")
 	var gold_mine_occupation_cells = gold_mine_position_building_component.get_occupation_cells()
-	var building_buildable_cells = building_compoent.get_buildable_cells()
+	var building_buildable_cells = building_compoent.get_control_cells()
 	for cell in building_buildable_cells:
 		if cell in gold_mine_occupation_cells:
 			_win()

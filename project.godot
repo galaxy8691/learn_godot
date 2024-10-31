@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 ALGameEvent="*res://scenes/autoload/game_event.tscn"
 ALLevelManager="*res://scenes/manager/level_manager.tscn"
+ALBuildingConstant="*res://scripts/building_constant.gd"
 
 [display]
 

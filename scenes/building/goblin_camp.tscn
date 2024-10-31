@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3 uid="uid://byyrp05lpt2mg"]
+
+[ext_resource type="PackedScene" uid="uid://ix48ftnmiref" path="res://scenes/component/building_component.tscn" id="1_phoat"]
+[ext_resource type="PackedScene" uid="uid://dfw7q12vy5ro4" path="res://assets/buildings/goblin_camp.tscn" id="2_cswb6"]
+
+[node name="GoblinCamp" type="Node2D"]
+y_sort_enabled = true
+
+[node name="BuildingComponent" parent="." instance=ExtResource("1_phoat")]
+danger_radius = 9
+occupation_size = Vector2i(2, 2)
+control_type = 2
+
+[node name="GoblinCamp" parent="." instance=ExtResource("2_cswb6")]

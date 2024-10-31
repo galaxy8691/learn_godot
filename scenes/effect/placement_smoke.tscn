@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c4i87y0w8tu21"]
+[gd_scene load_steps=6 format=3 uid="uid://c4i87y0w8tu21"]
 
 [ext_resource type="Texture2D" uid="uid://coa2hkf48u0ps" path="res://assets/effects/particle.png" id="1_iera1"]
+[ext_resource type="Script" path="res://scenes/effect/placement_smoke.gd" id="1_x7lqk"]
 
 [sub_resource type="Curve" id="Curve_5d5fl"]
 _data = [Vector2(0, 0.802198), 0.0, 0.0, 0, 0, Vector2(0.229299, 1), 0.0, 0.0, 0, 1, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -30,8 +31,11 @@ damping_max = 800.0
 scale_curve = SubResource("CurveTexture_pbimd")
 
 [node name="PlacementSmoke" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_x7lqk")
 
 [node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+y_sort_enabled = true
 emitting = false
 amount = 12
 process_material = SubResource("ParticleProcessMaterial_j5m7l")
@@ -40,6 +44,7 @@ lifetime = 0.8
 one_shot = true
 
 [node name="GPUParticles2D2" type="GPUParticles2D" parent="."]
+y_sort_enabled = true
 rotation = -3.14159
 emitting = false
 amount = 12
