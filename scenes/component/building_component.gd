@@ -8,7 +8,7 @@ class_name BuildingComponent extends Node2D
 @export var deletable : bool = true
 
 
-@export var control_type : BuildingConstant.ControlType = BuildingConstant.ControlType.buildable
+@export var control_type : BuildingConstant.ControlType = BuildingConstant.ControlType.BUILDABLE
 
 
 # Called when the node enters the scene tree for the first time.
@@ -34,11 +34,11 @@ func get_occupation_cells() -> Array[Vector2i]:
 
 func get_control_cells() -> Array[Vector2i]:
 	var radius = 0
-	if control_type == BuildingConstant.ControlType.buildable:
+	if control_type == BuildingConstant.ControlType.BUILDABLE:
 		radius = buildable_radius
-	elif control_type == BuildingConstant.ControlType.resource:
+	elif control_type == BuildingConstant.ControlType.RESOURCE:
 		radius = resource_radius
-	elif control_type == BuildingConstant.ControlType.danger:
+	elif control_type == BuildingConstant.ControlType.DANGER:
 		radius = danger_radius
 	var cells : Array[Vector2i] = []
 	var cell_area = get_grid_cell_area()

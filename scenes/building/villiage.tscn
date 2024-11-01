@@ -107,9 +107,12 @@ libraries = {
 }
 
 [node name="BuildingComponent" parent="." instance=ExtResource("1_aamqx")]
+buildable_radius = null
 resource_radius = 4
 resource_uasage = 4
+danger_radius = null
 occupation_size = Vector2i(2, 2)
+deletable = null
 control_type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

@@ -2,7 +2,15 @@ extends Node
 class_name BuildingConstant
 
 enum ControlType {
-	buildable,
-	resource,
-	danger
+	BUILDABLE,
+	RESOURCE,
+	DANGER
 }
+
+enum BuildingType {
+	TOWER,
+	VILLIAGE,
+	BARRACK
+}
+
+

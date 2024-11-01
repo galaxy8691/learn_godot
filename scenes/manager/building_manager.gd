@@ -5,6 +5,7 @@ enum State {
 	Normal,
 	Building
 }
+
 var tower : PackedScene = load("res://scenes/building/tower.tscn")
 var villiage : PackedScene = load("res://scenes/building/villiage.tscn")
 @export var ysort : Node2D
@@ -12,7 +13,7 @@ var villiage : PackedScene = load("res://scenes/building/villiage.tscn")
 var build_radius = 3
 var resource_radius = 3
 var current_building_instance : Node2D = null;
-var place_building_type = "tower" # tower or villiage
+var place_building_type  : BuildingConstant.BuildingType = BuildingConstant.BuildingType.TOWER
 @export var cursor : BuildingGhost
 var hover_grid_position : Vector2i = Vector2i.MAX
 @export var ui : UI
@@ -24,26 +25,26 @@ func _ready() -> void:
 	cursor.visible = false
 	cursor.set_invalid()
 	ui.place_tower.connect(func ():
-		_on_place_building_press("tower")
+		_on_place_building_press(BuildingConstant.BuildingType.TOWER)
 	)
 	ui.place_villiage.connect(func ():
-		_on_place_building_press("villiage")
+		_on_place_building_press(BuildingConstant.BuildingType.VILLIAGE)
 	)
 	GameEvent.emit_resource_changed(current_resource)
 	GameEvent.instance.ask_resource_point.connect(func ():
 		GameEvent.emit_resource_changed(current_resource)
 	)
 
-func _on_place_building_press(type : String) -> void:
+func _on_place_building_press(type : BuildingConstant.BuildingType) -> void:
 	place_building_type = type
 	if current_state == State.Normal:
 		cursor.visible = true
 		current_state = State.Building
 		grid_manager.clear_highlight_tile_maplayer()
 		cursor.set_building_type(type)
-		if place_building_type == "tower":
+		if place_building_type == BuildingConstant.BuildingType.TOWER:
 			_on_place_tower_press()
-		elif place_building_type == "villiage":
+		elif place_building_type == BuildingConstant.BuildingType.VILLIAGE:
 			_on_place_villiage_press()
 		_set_build_and_resource_radius(current_building_instance)
 	else:
@@ -111,7 +112,7 @@ func _process(_delta: float) -> void:
 	elif current_state == State.Building:
 		hover_grid_position = get_mouse_grid_cell_position(cursor.get_building_offset())
 		grid_manager.clear_highlight_tile_maplayer()
-		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size):
+		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size) and grid_manager.check_cell_is_in_danger_area(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size):
 			cursor.set_invalid()
 		else:
 			cursor.set_valid()

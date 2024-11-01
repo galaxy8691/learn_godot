@@ -58,7 +58,7 @@ func _check_cell_is_wood_tile(cell : Vector2i):
 	return tile_data.get_custom_data("wood")
 
 func _update_collected_resource(buildable_compoent: BuildingComponent):
-	if buildable_compoent.control_type == BuildingConstant.ControlType.resource:
+	if buildable_compoent.control_type == BuildingConstant.ControlType.RESOURCE:
 		var cells : Array[Vector2i] = buildable_compoent.get_control_cells()
 		for cell in cells:
 			if _check_cell_is_wood_tile(cell):
@@ -76,12 +76,12 @@ func get_new_collected_resource_point():
 func _update_cells():
 	valid_buildable_cells.clear()
 	for building_component in placed_buildings:
-		if building_component.control_type == BuildingConstant.ControlType.buildable:	
+		if building_component.control_type == BuildingConstant.ControlType.BUILDABLE:	
 			var cells : Array[Vector2i] = building_component.get_control_cells()
 			for cell in cells:
 				if _check_cell_is_buildable_tile(cell) && Vector2i(cell.x,cell.y) not in valid_buildable_cells:
 					valid_buildable_cells.append(cell)
-		elif building_component.control_type == BuildingConstant.ControlType.danger:
+		elif building_component.control_type == BuildingConstant.ControlType.DANGER:
 			var cells : Array[Vector2i] = building_component.get_control_cells()
 			for cell in cells:
 				if _check_cell_is_buildable_tile(cell) && Vector2i(cell.x,cell.y) not in danger_cells:
@@ -143,6 +143,19 @@ func check_cell_is_in_buiding_area_and_not_occupied(cell : Vector2i, area_size :
 		result = false
 		for tile_manager in cell_tile_maplayers:
 			if tile_manager.check_cells_in_occupied_cells(cells):
+				result = true
+				break
+	return result
+
+func check_cell_is_in_danger_area(cell : Vector2i, area_size : Vector2i):
+	var result = false
+	print(danger_cells)
+	var cells : Array[Vector2i] = []
+	for x in range(cell.x, cell.x + area_size.x):   
+		for y in range(cell.y, cell.y + area_size.y):
+			cells.append(Vector2i(x,y))
+			if Vector2i(x,y) in danger_cells:
+				print("danger")
 				result = true
 				break
 	return result
