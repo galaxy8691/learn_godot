@@ -117,9 +117,10 @@ control_type = 1
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 clip_children = 1
-y_sort_enabled = true
+position = Vector2(64, 96)
 texture = ExtResource("2_qdqxk")
 centered = false
-offset = Vector2(-96, -138)
+offset = Vector2(-159, -231)
 
 [node name="VilliageSprite" parent="Sprite2D" instance=ExtResource("2_7coe7")]
+position = Vector2(0, 0)

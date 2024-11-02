@@ -7,7 +7,7 @@
 y_sort_enabled = true
 
 [node name="BuildingComponent" parent="." instance=ExtResource("1_ikic6")]
-buildable_radius = 2
+buildable_radius = 3
 occupation_size = Vector2i(5, 3)
 deletable = false
 

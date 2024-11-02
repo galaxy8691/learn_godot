@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bj74qc6jft7le"]
+
+[ext_resource type="Script" path="res://scenes/component/building_component.gd" id="1_qsgqe"]
+[ext_resource type="Texture2D" uid="uid://1t10dhrweam4" path="res://assets/buildings/building_mask.png" id="2_aie72"]
+[ext_resource type="PackedScene" uid="uid://ck0c8sw8bf1fj" path="res://assets/buildings/barrack.tscn" id="3_l30n4"]
+
+[node name="Barrack" type="Node2D"]
+
+[node name="BuildingComponent" type="Node2D" parent="."]
+script = ExtResource("1_qsgqe")
+attack_radius = 7
+occupation_size = Vector2i(5, 3)
+can_build_on_danger = true
+control_type = 3
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+clip_children = 1
+position = Vector2(160, 160)
+texture = ExtResource("2_aie72")
+centered = false
+offset = Vector2(-160, -248)
+
+[node name="Barrack" parent="Sprite2D" instance=ExtResource("3_l30n4")]
+offset = Vector2(-160, -248)

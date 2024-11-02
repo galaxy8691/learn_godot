@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bb2y7t1xyr0h5"]
+[gd_scene load_steps=15 format=3 uid="uid://bb2y7t1xyr0h5"]
 
 [ext_resource type="Script" path="res://scenes/building/building_ghost.gd" id="1_aqjal"]
 [ext_resource type="PackedScene" uid="uid://rj554ikw8dlh" path="res://assets/buildings/villiage_sprite.tscn" id="1_efm3i"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://cmp42mki4kejs" path="res://assets/ui/04.png" id="5_q1gbo"]
 [ext_resource type="Texture2D" uid="uid://dx0jlqyvroptm" path="res://assets/ui/05.png" id="6_khfko"]
 [ext_resource type="Texture2D" uid="uid://c3ldu7u6am5ot" path="res://assets/ui/06.png" id="7_swwyy"]
+[ext_resource type="PackedScene" uid="uid://ck0c8sw8bf1fj" path="res://assets/buildings/barrack.tscn" id="8_sycxj"]
 
 [sub_resource type="Animation" id="Animation_br1nl"]
 length = 0.001
@@ -228,3 +229,5 @@ offset = Vector2(-34, -30)
 [node name="VilliageSprite" parent="." instance=ExtResource("1_efm3i")]
 
 [node name="TowerSprite" parent="." instance=ExtResource("2_rjvjh")]
+
+[node name="BarrackSprite" parent="." instance=ExtResource("8_sycxj")]

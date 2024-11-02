@@ -4,6 +4,7 @@ class_name BuildingGhost
 
 var tower_sprite : Sprite2D
 var villiage_sprite : Sprite2D
+var barrack_sprite : Sprite2D
 var is_valid : bool = false
 var top_right_sprite : Sprite2D
 var bottom_left_sprite : Sprite2D
@@ -13,6 +14,7 @@ var current_type : BuildingConstant.BuildingType = BuildingConstant.BuildingType
 func _ready() -> void:
 	tower_sprite = $TowerSprite
 	villiage_sprite = $VilliageSprite
+	barrack_sprite = $BarrackSprite
 	top_right_sprite = $TopRightSprite2D
 	bottom_left_sprite = $BottomLeftSprite2D
 	bottom_right_sprite = $BottomRightSprite2D
@@ -22,6 +24,7 @@ func set_building_type(type : BuildingConstant.BuildingType) -> void:
 		current_type = BuildingConstant.BuildingType.TOWER
 		tower_sprite.visible = true
 		villiage_sprite.visible = false
+		barrack_sprite.visible = false
 		top_right_sprite.position = Vector2(2*64,0)
 		bottom_left_sprite.position = Vector2(0,2*64)
 		bottom_right_sprite.position = Vector2(2*64,2*64)
@@ -29,10 +32,18 @@ func set_building_type(type : BuildingConstant.BuildingType) -> void:
 		current_type = BuildingConstant.BuildingType.VILLIAGE
 		tower_sprite.visible = false
 		villiage_sprite.visible = true
+		barrack_sprite.visible = false
 		top_right_sprite.position = Vector2(2*64,0)
 		bottom_left_sprite.position = Vector2(0,2*64)
 		bottom_right_sprite.position = Vector2(2*64,2*64)
-		
+	elif type == BuildingConstant.BuildingType.BARRACK:
+		current_type = BuildingConstant.BuildingType.BARRACK
+		tower_sprite.visible = false
+		villiage_sprite.visible = false
+		barrack_sprite.visible = true
+		top_right_sprite.position = Vector2(5*64,0)
+		bottom_left_sprite.position = Vector2(0,3*64)
+		bottom_right_sprite.position = Vector2(5*64,3*64)
 
 func set_invalid() -> void:
 	is_valid = false
@@ -48,4 +59,6 @@ func get_building_offset() -> Vector2:
 		return Vector2(1*32,1*64)
 	elif current_type == BuildingConstant.BuildingType.VILLIAGE:
 		return Vector2(1*32,1*64)
+	elif current_type == BuildingConstant.BuildingType.BARRACK:
+		return Vector2(2.5*32,1.5*64)
 	return Vector2(0,0)

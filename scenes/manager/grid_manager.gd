@@ -49,7 +49,10 @@ func highlight_area():
 	for cell in valid_buildable_cells:
 		highlight_tile_maplayer.set_cell(cell, 0,Vector2i(0,0))
 	for cell in danger_cells:
-		highlight_tile_maplayer.set_cell(cell, 0,Vector2i(0,1))
+		if cell not in valid_buildable_cells:
+			highlight_tile_maplayer.set_cell(cell, 0,Vector2i(0,1))
+		else:
+			highlight_tile_maplayer.set_cell(cell, 0,Vector2i(1,1))
 
 func _check_cell_is_wood_tile(cell : Vector2i):
 	var tile_data = resource_tile_maplayer.get_cell_tile_data(cell)
@@ -149,13 +152,11 @@ func check_cell_is_in_buiding_area_and_not_occupied(cell : Vector2i, area_size :
 
 func check_cell_is_in_danger_area(cell : Vector2i, area_size : Vector2i):
 	var result = false
-	print(danger_cells)
 	var cells : Array[Vector2i] = []
 	for x in range(cell.x, cell.x + area_size.x):   
 		for y in range(cell.y, cell.y + area_size.y):
 			cells.append(Vector2i(x,y))
 			if Vector2i(x,y) in danger_cells:
-				print("danger")
 				result = true
 				break
 	return result

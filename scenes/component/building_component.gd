@@ -4,8 +4,10 @@ class_name BuildingComponent extends Node2D
 @export var resource_radius : int
 @export var resource_uasage : int
 @export var danger_radius : int
+@export var attack_radius : int
 @export var occupation_size : Vector2i
 @export var deletable : bool = true
+@export var can_build_on_danger : bool = false
 
 
 @export var control_type : BuildingConstant.ControlType = BuildingConstant.ControlType.BUILDABLE
@@ -40,6 +42,8 @@ func get_control_cells() -> Array[Vector2i]:
 		radius = resource_radius
 	elif control_type == BuildingConstant.ControlType.DANGER:
 		radius = danger_radius
+	elif control_type == BuildingConstant.ControlType.ATTACK:
+		radius = attack_radius  
 	var cells : Array[Vector2i] = []
 	var cell_area = get_grid_cell_area()
 	for x in range(cell_area.position.x - radius, cell_area.end.x + radius ):

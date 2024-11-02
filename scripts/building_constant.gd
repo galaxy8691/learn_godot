@@ -4,7 +4,8 @@ class_name BuildingConstant
 enum ControlType {
 	BUILDABLE,
 	RESOURCE,
-	DANGER
+	DANGER,
+	ATTACK
 }
 
 enum BuildingType {

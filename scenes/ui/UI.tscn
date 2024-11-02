@@ -61,3 +61,10 @@ layout_mode = 2
 building_name = "Tower"
 resource_cost = 2
 description = "Increase building range"
+
+[node name="BarrackBuildButtonSection" parent="MarginContainer/PanelContainer/VBoxContainer" instance=ExtResource("2_051gl")]
+unique_name_in_owner = true
+layout_mode = 2
+building_name = "Barrack"
+resource_cost = 5
+description = "Kiil goblin camp"

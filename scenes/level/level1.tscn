@@ -7,6 +7,9 @@
 
 [node name="Level1" instance=ExtResource("1_ob5ci")]
 
+[node name="BuildingManager" parent="." index="1"]
+current_resource = 20
+
 [node name="GridManager" parent="." index="3" node_paths=PackedStringArray("cell_tile_maplayers")]
 cell_tile_maplayers = [NodePath("../YSort/BaseTileMapLayer"), NodePath("../YSort/SandTileMapLayer"), NodePath("../YSort/ElevationMapLayer"), NodePath("../YSort/GrassTileMapLayer")]
 

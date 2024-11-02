@@ -8,6 +8,7 @@ enum State {
 
 var tower : PackedScene = load("res://scenes/building/tower.tscn")
 var villiage : PackedScene = load("res://scenes/building/villiage.tscn")
+var barrack : PackedScene = load("res://scenes/building/barrack.tscn")
 @export var ysort : Node2D
 @export var grid_manager : GridManager
 var build_radius = 3
@@ -30,6 +31,9 @@ func _ready() -> void:
 	ui.place_villiage.connect(func ():
 		_on_place_building_press(BuildingConstant.BuildingType.VILLIAGE)
 	)
+	ui.place_barracks.connect(func ():
+		_on_place_building_press(BuildingConstant.BuildingType.BARRACK)
+	)
 	GameEvent.emit_resource_changed(current_resource)
 	GameEvent.instance.ask_resource_point.connect(func ():
 		GameEvent.emit_resource_changed(current_resource)
@@ -46,6 +50,8 @@ func _on_place_building_press(type : BuildingConstant.BuildingType) -> void:
 			_on_place_tower_press()
 		elif place_building_type == BuildingConstant.BuildingType.VILLIAGE:
 			_on_place_villiage_press()
+		elif place_building_type == BuildingConstant.BuildingType.BARRACK:
+			_on_place_barracks_press()
 		_set_build_and_resource_radius(current_building_instance)
 	else:
 		cancel_place_building()
@@ -59,6 +65,10 @@ func _on_place_tower_press():
 
 func _on_place_villiage_press():
 	current_building_instance = villiage.instantiate()
+
+func _on_place_barracks_press():
+	current_building_instance = barrack.instantiate()
+
 	
 
 func _set_build_and_resource_radius(building_instance):
@@ -70,13 +80,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if current_state == State.Building:
 		if event.is_action_pressed("left_click") && hover_grid_position != Vector2i.MAX \
 		&& grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position, current_building_instance.get_node("BuildingComponent").occupation_size) \
-		&& current_resource >= current_building_instance.get_node("BuildingComponent").resource_uasage:
-			_set_current_resource(current_resource - current_building_instance.get_node("BuildingComponent").resource_uasage)
-			place_building(current_building_instance)
-			_set_current_resource(current_resource +  grid_manager.get_new_collected_resource_point())
-			current_building_instance = null
-			cursor.visible = false
-			current_state = State.Normal
+		&& current_resource >= current_building_instance.get_node("BuildingComponent").resource_uasage and (!grid_manager.check_cell_is_in_danger_area(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size) or current_building_instance.get_node("BuildingComponent").can_build_on_danger):
+				_set_current_resource(current_resource - current_building_instance.get_node("BuildingComponent").resource_uasage)
+				place_building(current_building_instance)
+				_set_current_resource(current_resource +  grid_manager.get_new_collected_resource_point())
+				current_building_instance = null
+				cursor.visible = false
+				current_state = State.Normal
 		if event.is_action_pressed("cancel"):
 			cancel_place_building()
 	if current_state == State.Normal:
@@ -112,7 +122,7 @@ func _process(_delta: float) -> void:
 	elif current_state == State.Building:
 		hover_grid_position = get_mouse_grid_cell_position(cursor.get_building_offset())
 		grid_manager.clear_highlight_tile_maplayer()
-		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size) and grid_manager.check_cell_is_in_danger_area(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size):
+		if !grid_manager.check_cell_is_in_buiding_area_and_not_occupied(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size) or grid_manager.check_cell_is_in_danger_area(hover_grid_position,current_building_instance.get_node("BuildingComponent").occupation_size) and !current_building_instance.get_node("BuildingComponent").can_build_on_danger:
 			cursor.set_invalid()
 		else:
 			cursor.set_valid()

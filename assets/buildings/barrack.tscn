@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://ck0c8sw8bf1fj"]
+
+[ext_resource type="Texture2D" uid="uid://234xta6k75q0" path="res://assets/buildings/castle_blue.png" id="1_j7bn3"]
+
+[node name="Barrack" type="Sprite2D"]
+position = Vector2(160, 160)
+texture = ExtResource("1_j7bn3")
+centered = false
+offset = Vector2(-160, -215)
